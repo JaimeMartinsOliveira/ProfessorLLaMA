@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
-model_id = "meta-llama/Llama-2-7b-hf"
+model_id = "meta-llama/Llama-3.1-8B"
 
 model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype="auto", device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained(model_id)
