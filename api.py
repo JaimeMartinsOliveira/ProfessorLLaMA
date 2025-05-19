@@ -1,4 +1,4 @@
-from fastapi import APIRouter , Request
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 from chatbot import generate_response
 import logging
@@ -9,6 +9,7 @@ router = APIRouter()
 class Message(BaseModel):
     prompt: str
 
+@router.post("/ask")
 async def ask(message: Message, request: Request):
     logger.info(f"Request from {request.client.host}: {message.prompt}")
     response = generate_response(message.prompt)

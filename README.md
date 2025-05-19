@@ -1,22 +1,22 @@
 
-# 🤖 ChatBot com LLaMA e FastAPI
+# 🤖 Chatbot com LLaMA + FastAPI
 
-Este projeto é uma API de chatbot construída com **FastAPI**, utilizando um modelo de linguagem grande (LLM) como o **LLaMA** via `transformers` da Hugging Face e suporte a quantização com `bitsandbytes`. Ideal para uso em aplicações com interface via Web, WhatsApp ou integração com outros serviços.
+Este projeto é uma **API de chatbot** construída com **FastAPI**, utilizando um **modelo de linguagem (LLM)** como o LLaMA ou Mistral, via [Transformers](https://huggingface.co/docs/transformers/) da Hugging Face, com suporte à quantização 4-bit por meio do `bitsandbytes`. Ideal para integração com Web, WhatsApp, aplicativos ou outras interfaces.
 
 ---
 
 ## 📦 Requisitos
 
-- Python 3.10 ou superior
+- Python 3.10+
 - CUDA (opcional, para uso com GPU NVIDIA)
 - PyTorch
-- `transformers`
-- `bitsandbytes`
-- `accelerate`
-- `uvicorn`
-- `fastapi`
+- transformers
+- bitsandbytes
+- accelerate
+- uvicorn
+- fastapi
 
-Instale com:
+### 📥 Instalação
 
 ```bash
 pip install -r requirements.txt
@@ -24,13 +24,11 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Configuração do modelo
+## ⚙️ Configuração do Modelo
 
-Este projeto usa um modelo LLaMA ou similar com quantização 4-bit para reduzir o uso de memória.
+Este projeto utiliza um modelo LLaMA, Mistral ou similar, com quantização 4-bit para reduzir o uso de memória.
 
-**Atenção:** Se sua GPU não tiver memória suficiente, o carregamento do modelo poderá falhar. Duas abordagens estão disponíveis:
-
-### ✅ Opção 1: Carregar o modelo inteiramente na CPU (mais compatível, mais lento)
+### 🔹 Opção 1: Carregar totalmente na CPU (mais compatível, porém mais lento)
 
 ```python
 model = AutoModelForCausalLM.from_pretrained(
@@ -40,7 +38,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-### ✅ Opção 2: Permitir offload entre GPU e CPU (requer `accelerate` configurado)
+### 🔹 Opção 2: Offload entre GPU e CPU (exige `accelerate` configurado)
 
 ```python
 model = AutoModelForCausalLM.from_pretrained(
@@ -51,33 +49,35 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-> Consulte [a documentação oficial](https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu) da Hugging Face para mais detalhes sobre offload.
+> 🔗 Consulte a [documentação oficial da Hugging Face](https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu) para mais detalhes sobre o offload.
 
 ---
 
 ## 🚀 Executando a API
 
-Para rodar localmente com **FastAPI + Uvicorn**:
+Inicie o servidor local com:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-A aplicação será iniciada em: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+A API estará disponível em: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
 ## 🔍 Testando a API
 
-Após iniciar a aplicação, acesse a documentação interativa:
+Após iniciar, acesse a documentação interativa:
 
-- Swagger: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- Redoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
-Você pode enviar mensagens ao chatbot via `POST`:
+### Exemplo de requisição `POST`
 
-```json
+```http
 POST /chat
+Content-Type: application/json
+
 {
   "message": "Olá, tudo bem?"
 }
@@ -85,34 +85,36 @@ POST /chat
 
 ---
 
-## 💻 Exemplo de uso com interface web ou WhatsApp
+## 💬 Integrações possíveis
 
-Este back-end pode ser integrado a interfaces como:
+A API pode ser usada com diferentes front-ends e serviços:
 
-- Front-end em **Gradio** ou **Streamlit**
-- API para **WhatsApp** com **Twilio** ou **Venom Bot**
-- Aplicações móveis via **Flutter**, **React Native** ou **Ionic**
+- Interfaces Web com **Gradio** ou **Streamlit**
+- Bots de WhatsApp usando **Twilio** ou **Venom Bot**
+- Aplicativos móveis com **Flutter**, **React Native** ou **Ionic**
 
 ---
 
-## 🧠 Modelo utilizado
+## 🧠 Modelos Compatíveis
 
-O modelo usado é configurável via Hugging Face. Exemplo:
+Você pode alterar o modelo via Hugging Face Hub. Exemplos:
 
 ```python
 model_id = "TheBloke/Mistral-7B-Instruct-v0.2-GPTQ"
 ```
 
-Você pode substituir por outros modelos compatíveis com quantização, como:
+Outros modelos recomendados:
 
 - `meta-llama/Llama-2-7b-chat-hf`
 - `mistralai/Mistral-7B-Instruct-v0.2`
 - `tiiuae/falcon-7b-instruct`
+- `TinyLlama/TinyLlama-1.1B-Chat-v1.0` (leve e rápido)
 
 ---
 
-## 🛠️ Dicas para uso eficiente
+## 🛠️ Boas práticas e dicas
 
-- Use modelos quantizados (`4bit`, `8bit`) para máquinas com pouca memória.
-- Use `device_map={"": "cpu"}` se não tiver GPU ou quiser evitar erros.
+- Prefira modelos quantizados (`4bit`, `8bit`) para economizar memória.
+- Use `device_map={"": "cpu"}` se não tiver GPU ou estiver enfrentando erros de memória.
 - Certifique-se de que `accelerate` esteja instalado e atualizado.
+- Para notebooks com até **6GB de VRAM**, é altamente recomendado usar quantização com offload para CPU.
