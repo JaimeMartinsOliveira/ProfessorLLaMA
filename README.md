@@ -5,7 +5,7 @@ Este projeto é uma **API de chatbot** construída com **FastAPI**, utilizando u
  
 ---
 
-## 📦 Requisitos 
+## 📦 Requisitos  
 
 - Python 3.10+  
 - CUDA (opcional, para uso com GPU NVIDIA)
