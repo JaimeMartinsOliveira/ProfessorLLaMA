@@ -15,7 +15,7 @@ Este projeto é uma **API de chatbot** construída com **FastAPI**, utilizando u
 - accelerate
 - uvicorn
 - fastapi
-
+ 
 ### 📥 Instalação
 
 ```bash
