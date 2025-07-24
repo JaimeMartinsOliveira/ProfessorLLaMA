@@ -2,7 +2,7 @@
 # 🤖 Chatbot com LLaMA + FastAPI
 
 Este projeto é uma **API de chatbot** construída com **FastAPI**, utilizando um **modelo de linguagem (LLM)** como o LLaMA ou Mistral, via [Transformers](https://huggingface.co/docs/transformers/) da Hugging Face, com suporte à quantização 4-bit por meio do `bitsandbytes`. Ideal para integração com Web, WhatsApp, aplicativos ou outras interfaces.
-
+ 
 ---
 
 ## 📦 Requisitos 
