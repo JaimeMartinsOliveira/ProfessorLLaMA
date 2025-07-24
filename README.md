@@ -12,7 +12,7 @@ Este projeto é uma **API de chatbot** construída com **FastAPI**, utilizando u
 - PyTorch
 - transformers 
 - bitsandbytes
-- accelerate
+- accelerate 
 - uvicorn
 - fastapi 
  
